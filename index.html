@@ -240,47 +240,177 @@
     <!-- ============================================== -->
     <section id="shopkeeperPortal" class="space-y-3 hidden">
 
-      <!-- Shopkeeper Stats Strip -->
-      <div class="flex items-center justify-between bg-white rounded-xl px-3.5 py-2.5 border border-slate-200/80 text-xs shadow-xs">
-        <div>
-          <span class="text-slate-400 text-[10px] block uppercase font-medium">Total</span>
-          <span class="font-bold text-slate-800 text-sm" id="statTotalRequests">0</span>
-        </div>
-        <div class="h-6 w-px bg-slate-200"></div>
-        <div>
-          <span class="text-amber-500 text-[10px] block uppercase font-medium">Pending</span>
-          <span class="font-bold text-amber-700 text-sm" id="statPendingCount">0</span>
-        </div>
-        <div class="h-6 w-px bg-slate-200"></div>
-        <div>
-          <span class="text-emerald-500 text-[10px] block uppercase font-medium">Approved</span>
-          <span class="font-bold text-emerald-700 text-sm" id="statApprovedCount">0</span>
-        </div>
-      </div>
-
-      <!-- QR Codes Management Action Bar -->
-      <div class="bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-100 rounded-xl p-2.5 flex items-center justify-between gap-3 shadow-xs">
-        <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center text-xs shrink-0 shadow-xs">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
-            </svg>
-          </div>
+      <!-- Shopkeeper Stats Strip & Actions -->
+      <div class="relative flex items-center justify-between bg-white rounded-xl px-3.5 py-2.5 border border-slate-200/80 text-xs shadow-xs">
+        <div class="flex items-center gap-2.5 sm:gap-3">
           <div>
-            <h3 class="text-xs font-bold text-slate-800">QR কোড স্ট্যান্ডি ও লিংক</h3>
-            <p class="text-[10px] text-slate-500 font-bn">কাস্টমার ও দোকানদার স্ক্যান কোড</p>
+            <span class="text-slate-400 text-[10px] block uppercase font-medium">Total</span>
+            <span class="font-bold text-slate-800 text-sm" id="statTotalRequests">0</span>
+          </div>
+          <div class="h-6 w-px bg-slate-200"></div>
+          <div>
+            <span class="text-amber-500 text-[10px] block uppercase font-medium">Pending</span>
+            <span class="font-bold text-amber-700 text-sm" id="statPendingCount">0</span>
+          </div>
+          <div class="h-6 w-px bg-slate-200"></div>
+          <div>
+            <span class="text-emerald-500 text-[10px] block uppercase font-medium">Approved</span>
+            <span class="font-bold text-emerald-700 text-sm" id="statApprovedCount">0</span>
           </div>
         </div>
-        <button 
-          type="button" 
-          onclick="openQrModal()" 
-          class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white text-[11px] font-semibold rounded-lg shadow-xs flex items-center gap-1 transition"
-        >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
-          </svg>
-          <span>QR কোড দেখুন</span>
-        </button>
+
+        <!-- Three-Dot (⋮) Menu Button -->
+        <div class="relative">
+          <button 
+            type="button" 
+            id="shopkeeperThreeDotBtn" 
+            onclick="toggleShopkeeperMenu(event)" 
+            class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 active:scale-95 transition flex items-center justify-center border border-slate-200/90 shadow-2xs"
+            title="মেনু ও লিংকসমূহ"
+            aria-label="Shopkeeper Options Menu"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+            </svg>
+          </button>
+
+          <!-- Dropdown Popover Menu -->
+          <div 
+            id="shopkeeperThreeDotMenu" 
+            class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 p-3 z-50 animate-in space-y-2.5 text-xs text-left"
+          >
+            <!-- Dropdown Header -->
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>অ্যাপের লিংক ও QR মেনু</span>
+              </span>
+              <button onclick="closeShopkeeperMenu()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <!-- Option 1: QR Standee Poster Modal -->
+            <button 
+              type="button" 
+              onclick="closeShopkeeperMenu(); openQrModal();" 
+              class="w-full bg-gradient-to-r from-sky-50 to-indigo-50 hover:from-sky-100 hover:to-indigo-100 border border-sky-100 p-2.5 rounded-xl flex items-center justify-between text-left transition shadow-2xs"
+            >
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center text-xs shrink-0 font-bold">
+                  QR
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-800 text-xs">QR কোড স্ট্যান্ডি ও প্রিন্ট</h4>
+                  <p class="text-[10px] text-slate-500 font-bn">কাউন্টার পোস্টার ও স্ক্যানার কোড</p>
+                </div>
+              </div>
+              <span class="text-sky-600 text-[11px] font-semibold">খুলুন ↗</span>
+            </button>
+
+            <!-- Option 2: Customer Direct Link -->
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2 space-y-1">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-slate-700 flex items-center gap-1">
+                  <span>📱 কাস্টমার লিংক (দোকানদার লুকানো)</span>
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <input 
+                  type="text" 
+                  id="menuCustomerUrl" 
+                  readonly 
+                  value="https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app/?view=customer" 
+                  class="w-full bg-white border border-slate-200 px-2 py-1 rounded text-[11px] font-mono text-slate-600 truncate focus:outline-hidden"
+                />
+                <button 
+                  type="button" 
+                  onclick="copyToClipboard(document.getElementById('menuCustomerUrl').value); showToast('কাস্টমার লিংক কপি হয়েছে!');" 
+                  class="px-2 py-1 bg-sky-600 hover:bg-sky-700 active:scale-95 text-white rounded text-[10px] font-semibold shrink-0 transition"
+                >
+                  কপি
+                </button>
+                <a 
+                  href="https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app/?view=customer" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="p-1 text-slate-400 hover:text-sky-600 hover:bg-sky-50 rounded shrink-0 transition" 
+                  title="নতুন ট্যাবে খুলুন"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Option 3: Shopkeeper Secret Link -->
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2 space-y-1">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-slate-700 flex items-center gap-1">
+                  <span>🔒 দোকানদার গোপন লিংক (সরাসরি ড্যাশবোর্ড)</span>
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <input 
+                  type="text" 
+                  id="menuShopkeeperUrl" 
+                  readonly 
+                  value="https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app/?view=shopkeeper&pin=2082" 
+                  class="w-full bg-white border border-slate-200 px-2 py-1 rounded text-[11px] font-mono text-slate-600 truncate focus:outline-hidden"
+                />
+                <button 
+                  type="button" 
+                  onclick="copyToClipboard(document.getElementById('menuShopkeeperUrl').value); showToast('দোকানদার লিংক কপি হয়েছে!');" 
+                  class="px-2 py-1 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white rounded text-[10px] font-semibold shrink-0 transition"
+                >
+                  কপি
+                </button>
+                <a 
+                  href="https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app/?view=shopkeeper&pin=2082" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded shrink-0 transition" 
+                  title="নতুন ট্যাবে খুলুন"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Option 4: Main Live App Link -->
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2 space-y-1">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-slate-700 flex items-center gap-1">
+                  <span>🌐 মূল ওয়েবসাইট লিংক (Home)</span>
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <input 
+                  type="text" 
+                  id="menuHomeUrl" 
+                  readonly 
+                  value="https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app" 
+                  class="w-full bg-white border border-slate-200 px-2 py-1 rounded text-[11px] font-mono text-slate-600 truncate focus:outline-hidden"
+                />
+                <button 
+                  type="button" 
+                  onclick="copyToClipboard(document.getElementById('menuHomeUrl').value); showToast('মূল লিংক কপি হয়েছে!');" 
+                  class="px-2 py-1 bg-slate-700 hover:bg-slate-800 active:scale-95 text-white rounded text-[10px] font-semibold shrink-0 transition"
+                >
+                  কপি
+                </button>
+                <a 
+                  href="https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded shrink-0 transition" 
+                  title="নতুন ট্যাবে খুলুন"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Search & Status Filter -->
@@ -726,6 +856,29 @@
       }, 2500);
     }
 
+    // Real-Time Cross-Tab / Cross-Device Channel
+    const syncChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('kazi_store_sync_v1') : null;
+
+    // Pleasant Notification Audio Chime for Shopkeeper
+    function playNotificationChime() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5 tone
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5 tone
+        gain.gain.setValueAtTime(0.18, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+      } catch (e) {}
+    }
+
     // Clipboard Copy Helpers
     function copyToClipboard(text, e) {
       if (e && typeof e.stopPropagation === 'function') {
@@ -864,10 +1017,63 @@
       }
     }
 
+    // Three-Dot (⋮) Menu Management
+    function toggleShopkeeperMenu(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('shopkeeperThreeDotMenu');
+      if (!menu) return;
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        // Sync values to current live URLs
+        const custUrl = getCustomerQrUrl();
+        const shopUrl = getShopkeeperQrUrl();
+        const homeUrl = getBaseAppUrl();
+
+        const custInp = document.getElementById('menuCustomerUrl');
+        const shopInp = document.getElementById('menuShopkeeperUrl');
+        const homeInp = document.getElementById('menuHomeUrl');
+
+        if (custInp) custInp.value = custUrl;
+        if (shopInp) shopInp.value = shopUrl;
+        if (homeInp) homeInp.value = homeUrl;
+
+        menu.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+      }
+    }
+
+    function closeShopkeeperMenu() {
+      const menu = document.getElementById('shopkeeperThreeDotMenu');
+      if (menu) menu.classList.add('hidden');
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('shopkeeperThreeDotMenu');
+      const btn = document.getElementById('shopkeeperThreeDotBtn');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+
     // QR Codes Management
+    const PUBLISHED_LIVE_URL = 'https://ais-pre-rxgqkekx3ynrx6q5hdh3x7-249884234297.asia-east1.run.app';
+
     function getBaseAppUrl() {
-      const url = new URL(window.location.href);
-      return `${url.origin}${url.pathname}`;
+      try {
+        const url = new URL(window.location.href);
+        // If loaded from live cloud domain or non-local domain, use that origin
+        if (url.hostname.includes('.run.app') || url.hostname.includes('.app')) {
+          return `${url.origin}${url.pathname}`;
+        }
+        // Fallback for localhost, 127.0.0.1, or sandbox iframe to ensure mobile scan works
+        return PUBLISHED_LIVE_URL;
+      } catch (e) {
+        return PUBLISHED_LIVE_URL;
+      }
     }
 
     function getCustomerQrUrl() {
@@ -1264,12 +1470,27 @@
         status: 'Pending'
       };
 
+      // 1. Immediately store in local state
       requestsData.unshift(newReq);
       saveRequests();
 
-      // Show personal receipt card to the customer
+      // 2. Show personal receipt card to the customer
       myRecentRequest = newReq;
       updateCustomerRecentCard();
+
+      // 3. Immediately send to backend server so shopkeeper's phone receives it in real-time!
+      fetch('/api/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReq)
+      }).catch(() => {});
+
+      // 4. Send via BroadcastChannel for same-device/browser tabs
+      if (syncChannel) {
+        try {
+          syncChannel.postMessage({ type: 'NEW_REQUEST', request: newReq });
+        } catch (err) {}
+      }
 
       // Reset form
       document.getElementById('rechargeForm').reset();
@@ -1277,7 +1498,7 @@
       numberRowsCount = 0;
       addNumberRow();
 
-      showToast(`মানি সেন্ড সফল! ৳${total} টাকা (${newReq.primaryMethod}) রিকোয়েস্ট জমা হয়েছে`);
+      showToast(`মানি সেন্ড সফল! ৳${total} টাকা (${newReq.primaryMethod}) রিকোয়েস্ট পাঠানো হয়েছে`);
     }
 
     function updateCustomerRecentCard() {
@@ -1302,7 +1523,7 @@
       }
     }
 
-    // Shopkeeper Requests Logic
+    // Shopkeeper Requests Logic & Server Sync
     function loadRequests() {
       try {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -1314,6 +1535,8 @@
       } catch (e) {
         requestsData = [];
       }
+      // Immediately sync with server in background
+      syncRequestsFromServer(false);
     }
 
     function saveRequests() {
@@ -1330,6 +1553,70 @@
           myRecentRequest = found;
           updateCustomerRecentCard();
         }
+      }
+    }
+
+    // Continuous Real-Time Synchronization with Server
+    async function syncRequestsFromServer(notifyIfNew = true) {
+      try {
+        const res = await fetch('/api/requests', { cache: 'no-store' });
+        if (!res.ok) return;
+        const serverList = await res.json();
+        if (!Array.isArray(serverList)) return;
+
+        // If local has items and server is empty (e.g. freshly seeded), push local to server!
+        if (requestsData.length > 0 && serverList.length === 0) {
+          for (const item of requestsData) {
+            fetch('/api/requests', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(item)
+            }).catch(() => {});
+          }
+          return;
+        }
+
+        if (serverList.length === 0 && requestsData.length === 0) {
+          return;
+        }
+
+        const currentIds = new Set(requestsData.map(r => r.id));
+        const newIncoming = serverList.filter(r => !currentIds.has(r.id));
+
+        if (newIncoming.length > 0 && notifyIfNew) {
+          playNotificationChime();
+          if (navigator.vibrate) {
+            try { navigator.vibrate([150, 80, 150]); } catch(e) {}
+          }
+          const latest = newIncoming[0];
+          showToast(`🔔 নতুন মানি সেন্ড রিকোয়েস্ট এসেছে! (৳${latest.totalAmount})`);
+        }
+
+        requestsData = serverList;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(requestsData));
+        } catch (e) {}
+
+        if (currentRole === 'shopkeeper') {
+          renderRequestsList();
+          updateStats();
+        }
+
+        // Keep customer's recent status card in sync (e.g. if shopkeeper approved)
+        if (myRecentRequest) {
+          const found = requestsData.find(r => r.id === myRecentRequest.id);
+          if (found) {
+            const statusChanged = found.status !== myRecentRequest.status || found.last4Digits !== myRecentRequest.last4Digits;
+            myRecentRequest = found;
+            updateCustomerRecentCard();
+            if (statusChanged && found.status === 'Approved') {
+              playNotificationChime();
+              showToast(`আপনার রিকোয়েস্ট এপ্রুভ হয়েছে (${found.last4Digits})`);
+            }
+          }
+        }
+      } catch (e) {
+        // Fallback silently if offline
       }
     }
 
@@ -1590,6 +1877,20 @@
       renderRequestsList();
       closeApproveModal();
       showToast(`রিকোয়েস্ট এপ্রুভ হয়েছে (${digits})`);
+
+      // Sync with server API
+      fetch('/api/requests', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: activeApproveRequest.id, status: 'Approved', last4Digits: digits })
+      }).catch(() => {});
+
+      // Broadcast update across open tabs/devices
+      if (syncChannel) {
+        try {
+          syncChannel.postMessage({ type: 'UPDATE_REQUEST', id: activeApproveRequest.id, status: 'Approved', last4Digits: digits });
+        } catch (err) {}
+      }
     }
 
     function revertToPending() {
@@ -1600,6 +1901,19 @@
       renderRequestsList();
       closeApproveModal();
       showToast('রিকোয়েস্ট পেন্ডিং এ ফেরত নেওয়া হয়েছে');
+
+      // Sync with server API
+      fetch('/api/requests', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: activeApproveRequest.id, status: 'Pending', last4Digits: '' })
+      }).catch(() => {});
+
+      if (syncChannel) {
+        try {
+          syncChannel.postMessage({ type: 'UPDATE_REQUEST', id: activeApproveRequest.id, status: 'Pending', last4Digits: '' });
+        } catch (err) {}
+      }
     }
 
     function deleteReq(id) {
@@ -1607,6 +1921,17 @@
       saveRequests();
       renderRequestsList();
       showToast('Deleted');
+
+      // Delete on server API
+      fetch(`/api/requests?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      }).catch(() => {});
+
+      if (syncChannel) {
+        try {
+          syncChannel.postMessage({ type: 'DELETE_REQUEST', id });
+        } catch (err) {}
+      }
     }
 
     // Service Worker & PWA Install
@@ -1631,11 +1956,92 @@
       });
     }
 
-    // App Initialization
+    // App Initialization & Real-Time Sync Setup
     window.addEventListener('DOMContentLoaded', () => {
       loadRequests();
       addNumberRow();
       setupPwa();
+
+      // Setup Cross-Tab BroadcastChannel Listener
+      if (syncChannel) {
+        syncChannel.onmessage = (event) => {
+          const data = event.data;
+          if (!data) return;
+
+          if (data.type === 'NEW_REQUEST' && data.request) {
+            if (!requestsData.some(r => r.id === data.request.id)) {
+              requestsData.unshift(data.request);
+              try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(requestsData));
+              } catch (e) {}
+              playNotificationChime();
+              if (navigator.vibrate) {
+                try { navigator.vibrate([150, 80, 150]); } catch (e) {}
+              }
+              if (currentRole === 'shopkeeper') {
+                renderRequestsList();
+                updateStats();
+                showToast(`🔔 নতুন মানি সেন্ড রিকোয়েস্ট এসেছে! (৳${data.request.totalAmount})`);
+              }
+            }
+          } else if (data.type === 'UPDATE_REQUEST') {
+            const target = requestsData.find(r => r.id === data.id);
+            if (target) {
+              target.status = data.status;
+              target.last4Digits = data.last4Digits;
+              try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(requestsData));
+              } catch (e) {}
+              if (currentRole === 'shopkeeper') {
+                renderRequestsList();
+                updateStats();
+              }
+              if (myRecentRequest && myRecentRequest.id === data.id) {
+                myRecentRequest = target;
+                updateCustomerRecentCard();
+                if (data.status === 'Approved') {
+                  playNotificationChime();
+                  showToast(`আপনার রিকোয়েস্ট এপ্রুভ হয়েছে (${data.last4Digits || 'Approved'})`);
+                }
+              }
+            }
+          } else if (data.type === 'DELETE_REQUEST') {
+            requestsData = requestsData.filter(r => r.id !== data.id);
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(requestsData));
+            } catch (e) {}
+            if (currentRole === 'shopkeeper') {
+              renderRequestsList();
+              updateStats();
+            }
+          }
+        };
+      }
+
+      // Storage event listener for multi-tab sync on same browser
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          try {
+            requestsData = JSON.parse(e.newValue);
+            if (currentRole === 'shopkeeper') {
+              renderRequestsList();
+              updateStats();
+            }
+            if (myRecentRequest) {
+              const found = requestsData.find(r => r.id === myRecentRequest.id);
+              if (found) {
+                myRecentRequest = found;
+                updateCustomerRecentCard();
+              }
+            }
+          } catch (err) {}
+        }
+      });
+
+      // Background Real-Time Polling (every 2.5 seconds)
+      setInterval(() => {
+        syncRequestsFromServer(true);
+      }, 2500);
 
       // Check URL query parameters for Customer QR vs Shopkeeper QR
       const params = new URLSearchParams(window.location.search);
