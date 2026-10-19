@@ -1,0 +1,8 @@
+{
+  "name": "Kazi Store Mobile Recharge",
+  "description": "Mobile recharge and request portal for Kazi Store, Ashuganj, Sylhet South with offline LocalStorage support and PWA installability.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

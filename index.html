@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="bn" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kazi Store Money Send</title>
+  <meta name="description" content="Kazi Store Money Send - Ashuganj, Sylhet South" />
+  <meta property="og:title" content="Kazi Store Money Send" />
+  <meta property="og:description" content="Kazi Store Money Send - Ashuganj, Sylhet South" />
+  
+  <!-- PWA & Mobile Web App Meta -->
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="KaziStore" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Fonts: 'Hind Siliguri' for Bengali, 'Inter' for English & Numbers -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Inter"', '"Hind Siliguri"', 'sans-serif'],
+            bn: ['"Hind Siliguri"', 'sans-serif'],
+            mono: ['"Inter"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- QRCode Generator Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', 'Hind Siliguri', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    input, button, select {
+      outline: none;
+    }
+    .clean-input:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+    /* Hide spin buttons / stepper arrows - pure typing only */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    /* Print Styles for Customer QR Poster Standee */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printableQrStandee, #printableQrStandee * {
+        visibility: visible !important;
+      }
+      #printableQrStandee {
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 100% !important;
+        max-width: 450px !important;
+        margin: 0 auto !important;
+        padding: 30px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 2px dashed #0284c7 !important;
+        border-radius: 24px !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-full flex flex-col antialiased selection:bg-sky-100">
+
+  <!-- ============================================== -->
+  <!-- TOP STICKY HEADER                              -->
+  <!-- ============================================== -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Store Name & Location -->
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <path d="M12 18h.01"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5 leading-none">
+            <h1 class="font-bold text-slate-900 text-base">Kazi Store</h1>
+            <!-- Verified Badge -->
+            <svg class="w-4 h-4 fill-sky-500 text-white shrink-0" viewBox="0 0 24 24" title="Verified">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-0.5">Ashuganj, Sylhet South</p>
+        </div>
+      </div>
+
+      <!-- Right Action / Role Switcher -->
+      <div class="flex items-center gap-2">
+        <!-- Install PWA button -->
+        <button id="pwaInstallBtn" class="hidden items-center gap-1 text-[11px] font-semibold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-1 rounded-md">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Install
+        </button>
+
+        <!-- Role Toggle Button: Customer Mode vs Shopkeeper Mode -->
+        <div id="roleHeaderControl">
+          <!-- Dynamically populated: either 'দোকানদার লগইন' button or 'লগআউট' button -->
+        </div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- Main Viewport -->
+  <main class="flex-1 max-w-md w-full mx-auto p-4 pb-16">
+
+    <!-- ============================================== -->
+    <!-- VIEW 1: CUSTOMER PORTAL (PRODUCTS / RECHARGE)  -->
+    <!-- Visible ONLY to Customers                      -->
+    <!-- ============================================== -->
+    <section id="customerPortal" class="space-y-3">
+      
+      <!-- Minimal Money Send Card -->
+      <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
+          <div>
+            <h2 class="text-sm font-bold text-slate-900">মানি সেন্ড (Money Send)</h2>
+            <p class="text-[11px] text-slate-500 font-bn">মোবাইল নম্বর ও টাকার পরিমাণ দিন</p>
+          </div>
+          <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+            Active
+          </span>
+        </div>
+
+        <form id="rechargeForm" onsubmit="handleCustomerRechargeSubmit(event)" class="space-y-3.5">
+          
+          <!-- Dynamic Numbers Container -->
+          <div id="numberEntriesContainer" class="space-y-3">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Add Another Number Button -->
+          <button 
+            type="button" 
+            onclick="addNumberRow()" 
+            class="w-full py-2 px-3 rounded-xl border border-dashed border-slate-300 hover:border-sky-500 bg-slate-50 hover:bg-sky-50/50 text-slate-600 hover:text-sky-700 font-semibold text-xs transition flex items-center justify-center gap-1.5"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span>+ Add another number</span>
+          </button>
+
+          <!-- Minimal Total Bar -->
+          <div class="flex items-center justify-between py-2 px-3 bg-slate-50 rounded-xl text-xs border border-slate-100">
+            <span class="text-slate-500 font-medium"><span id="totalNumbersCount">1</span> number(s)</span>
+            <div class="font-bold text-slate-900">
+              <span class="text-slate-400 text-[11px] font-normal mr-1">Total:</span>
+              <span class="text-sm font-semibold text-sky-700">৳<span id="totalAmountSum">0</span></span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            class="w-full h-11 bg-sky-600 hover:bg-sky-700 active:bg-sky-800 text-white font-semibold rounded-xl text-sm transition shadow-xs flex items-center justify-center gap-2 active:scale-[0.99]"
+          >
+            <span>মানি সেন্ড রিকোয়েস্ট পাঠান</span>
+            <span class="text-sky-200 text-xs font-normal font-en">(Send Money)</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Customer's Own Recent Request Status (Safe, only shows their own submission) -->
+      <div id="customerRecentStatusCard" class="hidden bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-xs text-xs space-y-1.5">
+        <div class="flex items-center justify-between text-slate-500">
+          <span class="font-semibold text-slate-700">আপনার সাম্প্রতিক মানি সেন্ড:</span>
+          <span id="myRequestTime" class="font-mono text-[10px]">Just now</span>
+        </div>
+        <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <p class="font-mono font-bold text-slate-900" id="myRequestMobile">017XXXXXXXX</p>
+              <button 
+                type="button" 
+                onclick="copyCustomerMyRequestMobile(event)" 
+                class="p-1 rounded text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition" 
+                title="নম্বর কপি করুন"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-500" id="myRequestAmount">৳0</p>
+          </div>
+          <span id="myRequestStatusBadge" class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+            Pending (অপেক্ষমাণ)
+          </span>
+        </div>
+        <p class="text-[10px] text-slate-400 font-bn">
+          দোকানদার অনুমোদন করার পর আপনার ব্যালেন্স যুক্ত হবে।
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- VIEW 2: SHOPKEEPER PORTAL (REQUESTS ADMIN)     -->
+    <!-- Visible ONLY to Shopkeeper after PIN Login     -->
+    <!-- ============================================== -->
+    <section id="shopkeeperPortal" class="space-y-3 hidden">
+
+      <!-- Shopkeeper Stats Strip -->
+      <div class="flex items-center justify-between bg-white rounded-xl px-3.5 py-2.5 border border-slate-200/80 text-xs shadow-xs">
+        <div>
+          <span class="text-slate-400 text-[10px] block uppercase font-medium">Total</span>
+          <span class="font-bold text-slate-800 text-sm" id="statTotalRequests">0</span>
+        </div>
+        <div class="h-6 w-px bg-slate-200"></div>
+        <div>
+          <span class="text-amber-500 text-[10px] block uppercase font-medium">Pending</span>
+          <span class="font-bold text-amber-700 text-sm" id="statPendingCount">0</span>
+        </div>
+        <div class="h-6 w-px bg-slate-200"></div>
+        <div>
+          <span class="text-emerald-500 text-[10px] block uppercase font-medium">Approved</span>
+          <span class="font-bold text-emerald-700 text-sm" id="statApprovedCount">0</span>
+        </div>
+      </div>
+
+      <!-- QR Codes Management Action Bar -->
+      <div class="bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-100 rounded-xl p-2.5 flex items-center justify-between gap-3 shadow-xs">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center text-xs shrink-0 shadow-xs">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800">QR কোড স্ট্যান্ডি ও লিংক</h3>
+            <p class="text-[10px] text-slate-500 font-bn">কাস্টমার ও দোকানদার স্ক্যান কোড</p>
+          </div>
+        </div>
+        <button 
+          type="button" 
+          onclick="openQrModal()" 
+          class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white text-[11px] font-semibold rounded-lg shadow-xs flex items-center gap-1 transition"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+          </svg>
+          <span>QR কোড দেখুন</span>
+        </button>
+      </div>
+
+      <!-- Search & Status Filter -->
+      <div class="space-y-2">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="searchInput" 
+            oninput="handleSearchChange(this.value)" 
+            placeholder="Search by customer number..." 
+            class="clean-input w-full pl-8 pr-7 py-2 text-xs bg-white border border-slate-200 rounded-xl font-mono"
+          />
+          <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-2 text-slate-400 hover:text-slate-600">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Status Filter Tabs -->
+        <div class="flex items-center gap-1.5 text-[11px]">
+          <button onclick="setFilterStatus('all')" id="filterBtnAll" class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-semibold transition">
+            All (<span id="countFilterAll">0</span>)
+          </button>
+          <button onclick="setFilterStatus('Pending')" id="filterBtnPending" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">
+            Pending (<span id="countFilterPending">0</span>)
+          </button>
+          <button onclick="setFilterStatus('Approved')" id="filterBtnApproved" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition">
+            Approved (<span id="countFilterApproved">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Requests List Container -->
+      <div id="requestsListContainer" class="space-y-2">
+        <!-- Rendered by renderRequestsList() -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyRequestsState" class="hidden text-center py-8 px-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-500">
+        <p class="font-medium text-slate-700">No requests found</p>
+        <p class="text-[11px] text-slate-400 mt-0.5">কোন রিকোয়েস্ট মেলেনি</p>
+        <button onclick="seedSampleRequests()" class="mt-3 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg text-xs">
+          + Add Sample Data
+        </button>
+      </div>
+
+      <!-- Footer Management Actions -->
+      <div class="pt-2 flex justify-between text-[11px] text-slate-400 px-1">
+        <button onclick="seedSampleRequests()" class="hover:text-slate-700">+ Reset Samples</button>
+        <button onclick="clearAllRequests()" class="hover:text-rose-600">Clear All</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODAL: SHOPKEEPER PIN LOGIN                    -->
+  <!-- ============================================== -->
+  <div id="pinModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/50 backdrop-blur-xs hidden">
+    <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-2xl border border-slate-200 animate-in">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div class="flex items-center gap-1.5">
+          <div class="w-6 h-6 rounded-md bg-slate-900 text-white flex items-center justify-center text-xs">
+            🔒
+          </div>
+          <h3 class="text-sm font-bold text-slate-900 font-bn">দোকানদার এক্সেস</h3>
+        </div>
+        <button onclick="closePinModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <form onsubmit="handlePinSubmit(event)" class="mt-3 space-y-3">
+        <p class="text-xs text-slate-600 font-bn">
+          শুধুমাত্র দোকানদার রিকোয়েস্ট পোর্টাল দেখার জন্য পিন দিন:
+        </p>
+
+        <div>
+          <input 
+            type="password" 
+            id="pinInputField" 
+            maxlength="4" 
+            placeholder="••••" 
+            required
+            class="clean-input w-full text-center text-xl tracking-[0.4em] font-mono py-2 bg-slate-50 border border-slate-300 rounded-xl font-bold" 
+          />
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="closePinModal()" class="flex-1 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-600">
+            Cancel
+          </button>
+          <button type="submit" class="flex-1 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold">
+            লগইন (Enter)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: ENTER LAST 4 DIGITS FOR APPROVAL        -->
+  <!-- ============================================== -->
+  <div id="approveModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-xs hidden">
+    <div class="bg-white rounded-2xl max-w-xs w-full p-4 shadow-xl border border-slate-200 animate-in">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div class="flex items-center gap-1.5">
+          <span class="w-6 h-6 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold font-mono">
+            #4
+          </span>
+          <h3 class="text-sm font-bold text-slate-900 font-bn">লাস্ট ৪ ডিজিট দিন</h3>
+        </div>
+        <button onclick="closeApproveModal()" class="text-slate-400 hover:text-slate-600 p-0.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <form onsubmit="handleApproveSubmit(event)" class="mt-3 space-y-3">
+        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs flex justify-between items-center">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-mono font-bold text-slate-900 block text-xs cursor-pointer hover:text-sky-600 select-all" id="approveTargetMobile" onclick="copyTargetMobile(event)" title="ক্লিক করে কপি করুন">017XXXXXXXX</span>
+              <button 
+                type="button" 
+                onclick="copyTargetMobile(event)" 
+                class="p-0.5 rounded text-slate-400 hover:text-sky-600 hover:bg-slate-200/50 transition" 
+                title="নম্বর কপি করুন"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+              </button>
+            </div>
+            <span class="text-slate-500 text-[11px]" id="approveTargetMethod">বিকাশ</span>
+          </div>
+          <span class="font-mono font-bold text-slate-900 text-sm" id="approveTargetAmount">৳0</span>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-medium text-slate-600 mb-1 font-bn">
+            ট্রানজেকশন বা নম্বরের শেষ ৪ ডিজিট:
+          </label>
+          <input 
+            type="text" 
+            id="last4InputField" 
+            maxlength="4" 
+            placeholder="••••" 
+            required
+            pattern="[0-9]{4}"
+            inputmode="numeric"
+            class="clean-input w-full text-center text-2xl tracking-[0.4em] font-mono py-2 bg-slate-50 border border-slate-300 rounded-xl font-bold" 
+          />
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="closeApproveModal()" class="flex-1 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-600">
+            Cancel
+          </button>
+          <button type="submit" class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">
+            Confirm & Approve
+          </button>
+        </div>
+
+        <div id="approveModalUndoWrap" class="pt-1 text-center hidden">
+          <button type="button" onclick="revertToPending()" class="text-[11px] text-amber-600 hover:text-amber-700 underline font-medium">
+            পেন্ডিং এ ফেরত নিন (Undo)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: QR CODES MANAGEMENT (CUSTOMER & SHOP)   -->
+  <!-- ============================================== -->
+  <div id="qrModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/50 backdrop-blur-xs hidden">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-4.5 shadow-2xl border border-slate-200 animate-in max-h-[92vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center text-xs shrink-0 font-bold">
+            QR
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-900 font-bn">কিউআর কোড (QR Setup)</h3>
+            <p class="text-[10px] text-slate-400">স্ক্যান লিংক ও কাউন্টার প্রিন্ট</p>
+          </div>
+        </div>
+        <button onclick="closeQrModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="flex bg-slate-100 p-1 rounded-xl mt-3 text-xs font-semibold">
+        <button 
+          id="qrTabBtnCustomer" 
+          onclick="switchQrTab('customer')" 
+          class="flex-1 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs transition text-center"
+        >
+          📱 কাস্টমার QR (কাউন্টার)
+        </button>
+        <button 
+          id="qrTabBtnShopkeeper" 
+          onclick="switchQrTab('shopkeeper')" 
+          class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center"
+        >
+          🔒 দোকানদার QR
+        </button>
+      </div>
+
+      <!-- TAB 1: CUSTOMER QR -->
+      <div id="qrContentCustomer" class="mt-3.5 space-y-3">
+        <!-- Notice banner -->
+        <div class="bg-emerald-50 border border-emerald-200/80 rounded-xl p-2.5 text-[11px] text-emerald-800 leading-snug">
+          <p class="font-bold flex items-center gap-1 mb-0.5">
+            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>সম্পূর্ণ নিরাপদ কাস্টমার মোড:</span>
+          </p>
+          <p class="text-emerald-700">
+            এই QR কোড স্ক্যান করলে কাস্টমার সরাসরি মানি সেন্ড করতে পারবে, কিন্তু <strong>দোকানদার পোর্টালে যাওয়ার কোনো বাটন দেখতে পাবে না।</strong>
+          </p>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="text-center py-2 bg-slate-50 rounded-2xl border border-slate-100 p-3">
+          <div class="inline-block p-2 bg-white rounded-xl shadow-xs border border-slate-200">
+            <canvas id="customerQrCanvas" class="w-48 h-48 block mx-auto"></canvas>
+          </div>
+          <p class="text-[11px] font-semibold text-slate-700 mt-2 font-mono">Kazi Store Money Send</p>
+          <p class="text-[10px] text-slate-400">Scan to Send Money</p>
+        </div>
+
+        <!-- URL copy input -->
+        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center justify-between gap-2">
+          <input 
+            type="text" 
+            id="customerQrUrlInput" 
+            readonly 
+            class="bg-transparent text-[11px] font-mono text-slate-600 truncate flex-1 focus:outline-hidden"
+          />
+          <button 
+            type="button" 
+            onclick="copyCustomerQrUrl()" 
+            class="px-2 py-1 bg-white hover:bg-slate-100 text-slate-700 text-[11px] font-semibold rounded-lg border border-slate-200 shrink-0 shadow-xs active:scale-95 transition"
+          >
+            📋 কপি লিংক
+          </button>
+        </div>
+
+        <!-- Actions: Print & Download -->
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button 
+            type="button" 
+            onclick="printCustomerQrPoster()" 
+            class="py-2.5 px-3 bg-sky-600 hover:bg-sky-700 active:scale-95 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-xs transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span>পোস্টার প্রিন্ট</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="downloadQrImage('customer')" 
+            class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-800 font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 transition"
+          >
+            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>ডাউনলোড QR</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 2: SHOPKEEPER QR -->
+      <div id="qrContentShopkeeper" class="mt-3.5 space-y-3 hidden">
+        <!-- Notice banner -->
+        <div class="bg-amber-50 border border-amber-200/80 rounded-xl p-2.5 text-[11px] text-amber-900 leading-snug">
+          <p class="font-bold flex items-center gap-1 mb-0.5">
+            <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            </svg>
+            <span>দোকানদারের ব্যক্তিগত QR:</span>
+          </p>
+          <p class="text-amber-800 font-bn">
+            এটি শুধুমাত্র আপনার মোবাইল দিয়ে স্ক্যান করার জন্য। স্ক্যান করলেই সরাসরি দোকানদার রিকোয়েস্ট পোর্টাল ওপেন হয়ে যাবে।
+          </p>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="text-center py-2 bg-slate-50 rounded-2xl border border-slate-100 p-3">
+          <div class="inline-block p-2 bg-white rounded-xl shadow-xs border border-slate-200">
+            <canvas id="shopkeeperQrCanvas" class="w-48 h-48 block mx-auto"></canvas>
+          </div>
+          <p class="text-[11px] font-semibold text-slate-800 mt-2 font-mono">Shopkeeper Direct Portal</p>
+          <p class="text-[10px] text-slate-400">Scan to Open Admin</p>
+        </div>
+
+        <!-- URL copy input -->
+        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center justify-between gap-2">
+          <input 
+            type="text" 
+            id="shopkeeperQrUrlInput" 
+            readonly 
+            class="bg-transparent text-[11px] font-mono text-slate-600 truncate flex-1 focus:outline-hidden"
+          />
+          <button 
+            type="button" 
+            onclick="copyShopkeeperQrUrl()" 
+            class="px-2 py-1 bg-white hover:bg-slate-100 text-slate-700 text-[11px] font-semibold rounded-lg border border-slate-200 shrink-0 shadow-xs active:scale-95 transition"
+          >
+            📋 কপি লিংক
+          </button>
+        </div>
+
+        <!-- Actions -->
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button 
+            type="button" 
+            onclick="downloadQrImage('shopkeeper')" 
+            class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-xs"
+          >
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>ডাউনলোড QR</span>
+          </button>
+          <button 
+            type="button" 
+            onclick="closeQrModal(); showToast('দোকানদার ড্যাশবোর্ড সক্রিয়');" 
+            class="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-800 font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 transition"
+          >
+            <span>বন্ধ করুন</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- PRINTABLE QR STANDEE POSTER (For Counter/Table) -->
+  <!-- Only renders on paper / print preview          -->
+  <!-- ============================================== -->
+  <div id="printableQrStandee" class="hidden text-center p-6 bg-white font-sans">
+    <div class="inline-flex items-center justify-center w-14 h-14 bg-sky-600 text-white rounded-2xl mb-3 shadow-md mx-auto">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+        <path d="M12 18h.01"></path>
+      </svg>
+    </div>
+    
+    <h1 class="text-2xl font-black text-slate-900 tracking-tight">KAZI STORE</h1>
+    <p class="text-xs font-semibold text-sky-700 tracking-wider uppercase mb-1">Ashuganj, Sylhet South</p>
+    <div class="inline-block bg-sky-100 text-sky-900 text-xs font-bold px-3 py-1 rounded-full my-2">
+      ⚡ বিকাশ ও নগদ মানি সেন্ড (Money Send)
+    </div>
+
+    <!-- Standee QR Canvas / Image Render -->
+    <div class="my-4 p-3 bg-white border-2 border-slate-900 rounded-3xl inline-block shadow-lg">
+      <img id="printableQrImg" class="w-64 h-64 mx-auto block rounded-xl" alt="Kazi Store QR" />
+    </div>
+
+    <div class="space-y-1.5 max-w-xs mx-auto">
+      <p class="text-sm font-bold text-slate-900">
+        📷 ক্যামেরা দিয়ে স্ক্যান করুন
+      </p>
+      <p class="text-xs text-slate-600 font-bn">
+        মোবাইল ক্যামেরা দিয়ে স্ক্যান করে সহজেই বিকাশ বা নগদ মানি সেন্ড রিকোয়েস্ট পাঠান।
+      </p>
+    </div>
+
+    <div class="mt-6 pt-3 border-t border-slate-200 text-[10px] text-slate-400 font-mono">
+      Kazi Store Digital Money Send System
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-full max-w-xs px-4"></div>
+
+  <!-- Application Logic -->
+  <script>
+    const STORAGE_KEY = 'kazi_store_recharge_requests_v1';
+    const ROLE_KEY = 'kazi_store_current_role_v1';
+    const SHOPKEEPER_PIN = '2082';
+
+    // Application State
+    let currentRole = 'customer'; // 'customer' | 'shopkeeper'
+    let requestsData = [];
+    let numberRowsCount = 0;
+    let currentFilterStatus = 'all';
+    let currentSearchTerm = '';
+    let activeOtpRequest = null;
+    let deferredPrompt = null;
+    let myRecentRequest = null;
+
+    // BD Telecom Operator Detection
+    function detectOperator(phone) {
+      if (!phone) return { name: '', code: '' };
+      const clean = phone.replace(/[^0-9]/g, '');
+      let prefix = '';
+      if (clean.startsWith('880')) {
+        prefix = clean.substring(2, 5);
+      } else if (clean.startsWith('0')) {
+        prefix = clean.substring(0, 3);
+      } else {
+        prefix = '0' + clean.substring(0, 2);
+      }
+
+      if (prefix === '017' || prefix === '013') return { name: 'Grameenphone', code: 'GP', color: 'text-sky-700 bg-sky-50' };
+      if (prefix === '019' || prefix === '014') return { name: 'Banglalink', code: 'BL', color: 'text-orange-700 bg-orange-50' };
+      if (prefix === '018') return { name: 'Robi', code: 'Robi', color: 'text-red-700 bg-red-50' };
+      if (prefix === '016') return { name: 'Airtel', code: 'Airtel', color: 'text-rose-700 bg-rose-50' };
+      if (prefix === '015') return { name: 'Teletalk', code: 'Teletalk', color: 'text-emerald-700 bg-emerald-50' };
+      return { name: '', code: '', color: '' };
+    }
+
+    function showToast(text) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'bg-slate-900/90 backdrop-blur-xs text-white text-xs font-medium py-2 px-3 rounded-xl shadow-lg text-center transition-all duration-200 opacity-0 translate-y-2';
+      toast.textContent = text;
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-2'));
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 200);
+      }, 2500);
+    }
+
+    // Clipboard Copy Helpers
+    function copyToClipboard(text, e) {
+      if (e && typeof e.stopPropagation === 'function') {
+        e.stopPropagation();
+      }
+      if (!text) return;
+
+      const triggerBtn = (e && e.currentTarget && e.currentTarget.tagName === 'BUTTON') ? e.currentTarget : null;
+
+      function onCopied() {
+        showToast(`নম্বর কপি হয়েছে: ${text}`);
+        if (triggerBtn) {
+          const originalSvg = triggerBtn.innerHTML;
+          triggerBtn.innerHTML = `<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`;
+          setTimeout(() => {
+            triggerBtn.innerHTML = originalSvg;
+          }, 1500);
+        }
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(onCopied).catch(() => {
+          fallbackCopyText(text, onCopied);
+        });
+      } else {
+        fallbackCopyText(text, onCopied);
+      }
+    }
+
+    function fallbackCopyText(text, cb) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        if (cb) cb();
+      } catch (err) {
+        showToast(`নম্বর: ${text}`);
+      }
+      document.body.removeChild(ta);
+    }
+
+    function copyCustomerMyRequestMobile(e) {
+      if (myRecentRequest && myRecentRequest.primaryMobile) {
+        copyToClipboard(myRecentRequest.primaryMobile, e);
+      }
+    }
+
+    function copyTargetMobile(e) {
+      if (activeApproveRequest && activeApproveRequest.primaryMobile) {
+        copyToClipboard(activeApproveRequest.primaryMobile, e);
+      }
+    }
+
+    let isCustomerLocked = false;
+
+    // Role Management & UI Rendering
+    function setRole(role) {
+      currentRole = role;
+      try {
+        localStorage.setItem(ROLE_KEY, role);
+      } catch (e) {}
+
+      const customerPortal = document.getElementById('customerPortal');
+      const shopkeeperPortal = document.getElementById('shopkeeperPortal');
+      const roleHeaderControl = document.getElementById('roleHeaderControl');
+
+      if (role === 'shopkeeper') {
+        // Shopkeeper View: Only see Requests
+        customerPortal.classList.add('hidden');
+        shopkeeperPortal.classList.remove('hidden');
+
+        // Header button to return to customer mode
+        roleHeaderControl.innerHTML = `
+          <button onclick="setRole('customer')" class="flex items-center gap-1 text-[11px] font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg transition">
+            <span>কাস্টমার ভিউ</span>
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+          </button>
+        `;
+
+        renderRequestsList();
+        updateStats();
+      } else {
+        // Customer View: Only see Products (Recharge Request)
+        customerPortal.classList.remove('hidden');
+        shopkeeperPortal.classList.add('hidden');
+
+        if (isCustomerLocked) {
+          // When opened via Customer QR code:
+          // Strictly HIDE shopkeeper button so customers have NO way to access shopkeeper portal
+          roleHeaderControl.innerHTML = '';
+        } else {
+          // Normal mode: Header button to login as shopkeeper
+          roleHeaderControl.innerHTML = `
+            <button onclick="openPinModal()" class="flex items-center gap-1 text-[11px] font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded-lg transition" title="দোকানদার এক্সেস">
+              <span>🔒 দোকানদার</span>
+            </button>
+          `;
+        }
+      }
+    }
+
+    // PIN Authentication
+    function openPinModal() {
+      document.getElementById('pinInputField').value = '';
+      document.getElementById('pinModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('pinInputField').focus(), 100);
+    }
+
+    function closePinModal() {
+      document.getElementById('pinModal').classList.add('hidden');
+    }
+
+    function handlePinSubmit(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById('pinInputField').value.trim();
+      if (enteredPin === SHOPKEEPER_PIN) {
+        closePinModal();
+        isCustomerLocked = false;
+        setRole('shopkeeper');
+        showToast('দোকানদার মোডে স্বাগতম');
+      } else {
+        showToast('ভুল পিন! আবার চেষ্টা করুন');
+        const pinInput = document.getElementById('pinInputField');
+        if (pinInput) {
+          pinInput.value = '';
+          pinInput.focus();
+        }
+      }
+    }
+
+    // QR Codes Management
+    function getBaseAppUrl() {
+      const url = new URL(window.location.href);
+      return `${url.origin}${url.pathname}`;
+    }
+
+    function getCustomerQrUrl() {
+      return `${getBaseAppUrl()}?view=customer`;
+    }
+
+    function getShopkeeperQrUrl() {
+      return `${getBaseAppUrl()}?view=shopkeeper&pin=${SHOPKEEPER_PIN}`;
+    }
+
+    function openQrModal() {
+      const modal = document.getElementById('qrModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+
+      // Populate input URL texts
+      const custUrl = getCustomerQrUrl();
+      const shopUrl = getShopkeeperQrUrl();
+      
+      const custInput = document.getElementById('customerQrUrlInput');
+      const shopInput = document.getElementById('shopkeeperQrUrlInput');
+      if (custInput) custInput.value = custUrl;
+      if (shopInput) shopInput.value = shopUrl;
+
+      // Render QR canvases
+      renderQrCanvas('customerQrCanvas', custUrl);
+      renderQrCanvas('shopkeeperQrCanvas', shopUrl);
+
+      // Preload printable standee image
+      setTimeout(() => {
+        const custCanvas = document.getElementById('customerQrCanvas');
+        const standeeImg = document.getElementById('printableQrImg');
+        if (custCanvas && standeeImg) {
+          try {
+            standeeImg.src = custCanvas.toDataURL('image/png');
+          } catch(e) {}
+        }
+      }, 300);
+    }
+
+    function closeQrModal() {
+      const modal = document.getElementById('qrModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function switchQrTab(tab) {
+      const btnCustomer = document.getElementById('qrTabBtnCustomer');
+      const btnShopkeeper = document.getElementById('qrTabBtnShopkeeper');
+      const contentCustomer = document.getElementById('qrContentCustomer');
+      const contentShopkeeper = document.getElementById('qrContentShopkeeper');
+
+      if (tab === 'customer') {
+        btnCustomer.className = 'flex-1 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs transition text-center';
+        btnShopkeeper.className = 'flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center';
+        contentCustomer.classList.remove('hidden');
+        contentShopkeeper.classList.add('hidden');
+      } else {
+        btnShopkeeper.className = 'flex-1 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs transition text-center';
+        btnCustomer.className = 'flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition text-center';
+        contentShopkeeper.classList.remove('hidden');
+        contentCustomer.classList.add('hidden');
+      }
+    }
+
+    function renderQrCanvas(canvasId, text) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+
+      if (window.QRCode && typeof window.QRCode.toCanvas === 'function') {
+        window.QRCode.toCanvas(canvas, text, {
+          width: 220,
+          margin: 1,
+          color: {
+            dark: '#0f172a',
+            light: '#ffffff'
+          }
+        }, function (error) {
+          if (error) renderFallbackQrCanvas(canvas, text);
+        });
+      } else {
+        renderFallbackQrCanvas(canvas, text);
+      }
+    }
+
+    function renderFallbackQrCanvas(canvas, text) {
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        canvas.width = 220;
+        canvas.height = 220;
+        ctx.drawImage(img, 0, 0, 220, 220);
+      };
+      img.onerror = () => {
+        canvas.width = 220;
+        canvas.height = 220;
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, 0, 220, 220);
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('QR কোড প্রস্তুত', 110, 105);
+        ctx.font = '10px monospace';
+        ctx.fillText('লিংক কপি করে ওপেন করুন', 110, 125);
+      };
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(text)}`;
+    }
+
+    function copyCustomerQrUrl() {
+      const input = document.getElementById('customerQrUrlInput');
+      if (input) {
+        copyToClipboard(input.value);
+        showToast('কাস্টমার কিউআর লিংক কপি হয়েছে');
+      }
+    }
+
+    function copyShopkeeperQrUrl() {
+      const input = document.getElementById('shopkeeperQrUrlInput');
+      if (input) {
+        copyToClipboard(input.value);
+        showToast('দোকানদার সিক্রেট লিংক কপি হয়েছে');
+      }
+    }
+
+    function downloadQrImage(type) {
+      const canvasId = type === 'customer' ? 'customerQrCanvas' : 'shopkeeperQrCanvas';
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      try {
+        const link = document.createElement('a');
+        link.download = `kazi-store-${type}-qr.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast(`${type === 'customer' ? 'কাস্টমার' : 'দোকানদার'} QR ডাউনলোড সম্পন্ন`);
+      } catch (err) {
+        showToast('QR লিংক কপি করুন');
+      }
+    }
+
+    function printCustomerQrPoster() {
+      const canvas = document.getElementById('customerQrCanvas');
+      const printableImg = document.getElementById('printableQrImg');
+      const standee = document.getElementById('printableQrStandee');
+      
+      if (canvas && printableImg) {
+        printableImg.src = canvas.toDataURL('image/png');
+      }
+      if (standee) {
+        standee.classList.remove('hidden');
+      }
+
+      window.print();
+
+      setTimeout(() => {
+        if (standee) {
+          standee.classList.add('hidden');
+        }
+      }, 1000);
+    }
+
+    // Number Row Generation for Customer View
+    function createRowHtml(index, phone = '', amount = '', method = 'বিকাশ') {
+      return `
+        <div class="number-row p-3 rounded-xl border border-slate-200/90 bg-slate-50/50 space-y-2 relative" id="row_${index}" data-row="${index}">
+          ${index > 0 ? `
+            <button type="button" onclick="removeNumberRow(${index})" class="absolute top-2.5 right-2.5 text-slate-400 hover:text-rose-500 p-1" title="Remove">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          ` : ''}
+
+          <!-- Phone Input -->
+          <div>
+            <div class="flex items-center justify-between mb-1 text-[11px]">
+              <span class="text-slate-600 font-medium">Mobile Number</span>
+              <span id="op_${index}" class="font-bold text-[10px] px-1.5 py-0.2 rounded hidden"></span>
+            </div>
+            <div class="relative">
+              <input 
+                type="tel" 
+                id="phone_${index}"
+                value="${phone}"
+                oninput="onPhoneChange(${index}, this.value)"
+                placeholder="017XXXXXXXX"
+                maxlength="11"
+                required
+                class="clean-input w-full px-3 py-2 text-xs font-mono bg-white border border-slate-200 rounded-lg text-slate-900"
+              />
+            </div>
+          </div>
+
+          <!-- Amount Input + Medium (বিকাশ, নগদ, রিচার্জ) -->
+          <div>
+            <div class="flex items-center justify-between mb-1 text-[11px]">
+              <span class="text-slate-600 font-medium">Amount (৳)</span>
+              <span class="text-slate-400 font-bn text-[10px]">মাধ্যম: <strong id="lbl_method_${index}" class="text-slate-700">${method || 'বিকাশ'}</strong></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="relative flex-1">
+                <span class="absolute left-2.5 top-2 text-xs font-semibold text-slate-400">৳</span>
+                <input 
+                  type="text" 
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  id="amount_${index}"
+                  value="${amount}"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, ''); updateTotals();"
+                  placeholder="0"
+                  autocomplete="off"
+                  required
+                  class="clean-input w-full pl-6 pr-2 py-2 text-xs font-mono font-bold bg-white border border-slate-200 rounded-lg text-slate-900"
+                />
+              </div>
+
+              <!-- Medium Buttons: বিকাশ, নগদ, রিচার্জ -->
+              <input type="hidden" id="method_${index}" value="${method || 'বিকাশ'}" />
+              <div class="flex items-center gap-1 shrink-0">
+                <button 
+                  type="button" 
+                  id="btn_bkash_${index}"
+                  onclick="selectMethod(${index}, 'বিকাশ')" 
+                  class="px-2.5 py-1.5 rounded-lg border text-[11px] font-bold transition flex items-center gap-1 ${
+                    (method === 'বিকাশ' || !method) 
+                      ? 'bg-pink-50 text-pink-700 border-pink-300 shadow-xs' 
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  }"
+                >
+                  <span class="w-1.5 h-1.5 rounded-full ${(method === 'বিকাশ' || !method) ? 'bg-pink-500' : 'bg-slate-300'}"></span>
+                  <span>বিকাশ</span>
+                </button>
+                <button 
+                  type="button" 
+                  id="btn_nagad_${index}"
+                  onclick="selectMethod(${index}, 'নগদ')" 
+                  class="px-2.5 py-1.5 rounded-lg border text-[11px] font-bold transition flex items-center gap-1 ${
+                    method === 'নগদ' 
+                      ? 'bg-orange-50 text-orange-700 border-orange-300 shadow-xs' 
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  }"
+                >
+                  <span class="w-1.5 h-1.5 rounded-full ${method === 'নগদ' ? 'bg-orange-500' : 'bg-slate-300'}"></span>
+                  <span>নগদ</span>
+                </button>
+                <button 
+                  type="button" 
+                  id="btn_recharge_${index}"
+                  onclick="selectMethod(${index}, 'রিচার্জ')" 
+                  class="px-2 py-1.5 rounded-lg border text-[11px] font-medium transition flex items-center gap-1 ${
+                    method === 'রিচার্জ' 
+                      ? 'bg-sky-50 text-sky-700 border-sky-300 shadow-xs font-bold' 
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  }"
+                >
+                  <span class="w-1.5 h-1.5 rounded-full ${method === 'রিচার্জ' ? 'bg-sky-500' : 'bg-slate-300'}"></span>
+                  <span>রিচার্জ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function addNumberRow(phone = '', amount = '', method = 'বিকাশ') {
+      const container = document.getElementById('numberEntriesContainer');
+      const temp = document.createElement('div');
+      temp.innerHTML = createRowHtml(numberRowsCount, phone, amount, method);
+      container.appendChild(temp.firstElementChild);
+      if (phone) onPhoneChange(numberRowsCount, phone);
+      numberRowsCount++;
+      updateTotals();
+    }
+
+    function removeNumberRow(index) {
+      const row = document.getElementById(`row_${index}`);
+      if (row) {
+        row.remove();
+        updateTotals();
+      }
+    }
+
+    function selectMethod(index, method) {
+      const hidden = document.getElementById(`method_${index}`);
+      if (hidden) hidden.value = method;
+
+      const lbl = document.getElementById(`lbl_method_${index}`);
+      if (lbl) lbl.textContent = method;
+
+      const btnBkash = document.getElementById(`btn_bkash_${index}`);
+      const btnNagad = document.getElementById(`btn_nagad_${index}`);
+      const btnRecharge = document.getElementById(`btn_recharge_${index}`);
+
+      if (btnBkash) {
+        btnBkash.className = `px-2.5 py-1.5 rounded-lg border text-[11px] font-bold transition flex items-center gap-1 ${
+          method === 'বিকাশ' ? 'bg-pink-50 text-pink-700 border-pink-300 shadow-xs' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+        }`;
+        const dot = btnBkash.querySelector('span:first-child');
+        if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${method === 'বিকাশ' ? 'bg-pink-500' : 'bg-slate-300'}`;
+      }
+
+      if (btnNagad) {
+        btnNagad.className = `px-2.5 py-1.5 rounded-lg border text-[11px] font-bold transition flex items-center gap-1 ${
+          method === 'নগদ' ? 'bg-orange-50 text-orange-700 border-orange-300 shadow-xs' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+        }`;
+        const dot = btnNagad.querySelector('span:first-child');
+        if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${method === 'নগদ' ? 'bg-orange-500' : 'bg-slate-300'}`;
+      }
+
+      if (btnRecharge) {
+        btnRecharge.className = `px-2 py-1.5 rounded-lg border text-[11px] font-medium transition flex items-center gap-1 ${
+          method === 'রিচার্জ' ? 'bg-sky-50 text-sky-700 border-sky-300 shadow-xs font-bold' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+        }`;
+        const dot = btnRecharge.querySelector('span:first-child');
+        if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${method === 'রিচার্জ' ? 'bg-sky-500' : 'bg-slate-300'}`;
+      }
+    }
+
+    function onPhoneChange(index, val) {
+      const op = detectOperator(val);
+      const badge = document.getElementById(`op_${index}`);
+      if (badge) {
+        if (op.code) {
+          badge.textContent = op.code;
+          badge.className = `font-bold text-[10px] px-1.5 py-0.2 rounded ${op.color}`;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    }
+
+    function setQuickAmount(index, amt) {
+      const input = document.getElementById(`amount_${index}`);
+      if (input) {
+        input.value = amt;
+        updateTotals();
+      }
+    }
+
+    function updateTotals() {
+      const rows = document.querySelectorAll('.number-row');
+      let sum = 0;
+      let count = 0;
+      rows.forEach(r => {
+        const idx = r.getAttribute('data-row');
+        const amtInput = document.getElementById(`amount_${idx}`);
+        if (amtInput) {
+          count++;
+          sum += parseFloat(amtInput.value) || 0;
+        }
+      });
+      document.getElementById('totalNumbersCount').textContent = count;
+      document.getElementById('totalAmountSum').textContent = sum;
+    }
+
+    // Customer Recharge Submission Handler
+    function handleCustomerRechargeSubmit(e) {
+      e.preventDefault();
+      const rows = document.querySelectorAll('.number-row');
+      const list = [];
+      let total = 0;
+
+      for (let i = 0; i < rows.length; i++) {
+        const idx = rows[i].getAttribute('data-row');
+        const phone = document.getElementById(`phone_${idx}`).value.trim();
+        const amt = parseFloat(document.getElementById(`amount_${idx}`).value);
+
+        if (!phone || phone.length < 11) {
+          showToast(`সঠিক ১১ ডিজিটের ফোন নম্বর দিন (#${i+1})`);
+          return;
+        }
+        if (!amt || amt < 10) {
+          showToast(`ন্যূনতম ৳১০ পরিমাণ আবশ্যক`);
+          return;
+        }
+
+        const op = detectOperator(phone);
+        const methodInput = document.getElementById(`method_${idx}`);
+        const method = methodInput ? methodInput.value : 'বিকাশ';
+        list.push({ mobile: phone, amount: amt, operator: op.name || 'BD', method: method });
+        total += amt;
+      }
+
+      const newReq = {
+        id: 'R' + Date.now().toString().slice(-4),
+        timestamp: new Date().toISOString(),
+        timeStr: new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true }).format(new Date()),
+        numbers: list,
+        primaryMobile: list[0].mobile,
+        primaryOperator: list[0].operator,
+        primaryMethod: list[0].method || 'বিকাশ',
+        totalAmount: total,
+        status: 'Pending'
+      };
+
+      requestsData.unshift(newReq);
+      saveRequests();
+
+      // Show personal receipt card to the customer
+      myRecentRequest = newReq;
+      updateCustomerRecentCard();
+
+      // Reset form
+      document.getElementById('rechargeForm').reset();
+      document.getElementById('numberEntriesContainer').innerHTML = '';
+      numberRowsCount = 0;
+      addNumberRow();
+
+      showToast(`মানি সেন্ড সফল! ৳${total} টাকা (${newReq.primaryMethod}) রিকোয়েস্ট জমা হয়েছে`);
+    }
+
+    function updateCustomerRecentCard() {
+      if (!myRecentRequest) return;
+      const card = document.getElementById('customerRecentStatusCard');
+      const mobileEl = document.getElementById('myRequestMobile');
+      const amountEl = document.getElementById('myRequestAmount');
+      const statusEl = document.getElementById('myRequestStatusBadge');
+      const timeEl = document.getElementById('myRequestTime');
+
+      card.classList.remove('hidden');
+      mobileEl.textContent = myRecentRequest.primaryMobile;
+      amountEl.textContent = `৳${myRecentRequest.totalAmount} · ${myRecentRequest.primaryMethod || 'বিকাশ'}`;
+      timeEl.textContent = myRecentRequest.timeStr;
+
+      if (myRecentRequest.status === 'Approved') {
+        statusEl.className = "px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200";
+        statusEl.textContent = myRecentRequest.last4Digits ? `Approved (${myRecentRequest.last4Digits})` : "Approved (অনুমোদিত)";
+      } else {
+        statusEl.className = "px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200";
+        statusEl.textContent = "Pending (অপেক্ষমাণ)";
+      }
+    }
+
+    // Shopkeeper Requests Logic
+    function loadRequests() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          requestsData = JSON.parse(stored);
+        } else {
+          seedSampleRequests(false);
+        }
+      } catch (e) {
+        requestsData = [];
+      }
+    }
+
+    function saveRequests() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(requestsData));
+      } catch (e) {}
+      if (currentRole === 'shopkeeper') {
+        updateStats();
+      }
+      // If customer has a recent request, keep its status updated
+      if (myRecentRequest) {
+        const found = requestsData.find(r => r.id === myRecentRequest.id);
+        if (found) {
+          myRecentRequest = found;
+          updateCustomerRecentCard();
+        }
+      }
+    }
+
+    function seedSampleRequests(notify = true) {
+      requestsData = [
+        {
+          id: 'R104',
+          timestamp: new Date().toISOString(),
+          timeStr: '10:45 AM',
+          numbers: [{ mobile: '01712984512', amount: 100, operator: 'Grameenphone', method: 'বিকাশ' }],
+          primaryMobile: '01712984512',
+          primaryOperator: 'Grameenphone',
+          primaryMethod: 'বিকাশ',
+          totalAmount: 100,
+          status: 'Pending'
+        },
+        {
+          id: 'R103',
+          timestamp: new Date().toISOString(),
+          timeStr: '10:15 AM',
+          numbers: [{ mobile: '01911456789', amount: 50, operator: 'Banglalink', method: 'নগদ' }],
+          primaryMobile: '01911456789',
+          primaryOperator: 'Banglalink',
+          primaryMethod: 'নগদ',
+          totalAmount: 50,
+          status: 'Pending'
+        },
+        {
+          id: 'R102',
+          timestamp: new Date().toISOString(),
+          timeStr: '09:30 AM',
+          numbers: [{ mobile: '01819876543', amount: 200, operator: 'Robi', method: 'বিকাশ' }],
+          primaryMobile: '01819876543',
+          primaryOperator: 'Robi',
+          primaryMethod: 'বিকাশ',
+          last4Digits: '9543',
+          totalAmount: 200,
+          status: 'Approved'
+        }
+      ];
+      saveRequests();
+      if (currentRole === 'shopkeeper') {
+        renderRequestsList();
+      }
+      if (notify) showToast('Sample requests loaded');
+    }
+
+    function clearAllRequests() {
+      if (confirm('Clear all requests?')) {
+        requestsData = [];
+        saveRequests();
+        renderRequestsList();
+        showToast('All requests cleared');
+      }
+    }
+
+    function updateStats() {
+      const total = requestsData.length;
+      const pending = requestsData.filter(r => r.status === 'Pending').length;
+      const approved = requestsData.filter(r => r.status === 'Approved').length;
+
+      const elTotal = document.getElementById('statTotalRequests');
+      const elPending = document.getElementById('statPendingCount');
+      const elApproved = document.getElementById('statApprovedCount');
+
+      if (elTotal) elTotal.textContent = total;
+      if (elPending) elPending.textContent = pending;
+      if (elApproved) elApproved.textContent = approved;
+
+      const elFAll = document.getElementById('countFilterAll');
+      const elFPending = document.getElementById('countFilterPending');
+      const elFApproved = document.getElementById('countFilterApproved');
+
+      if (elFAll) elFAll.textContent = total;
+      if (elFPending) elFPending.textContent = pending;
+      if (elFApproved) elFApproved.textContent = approved;
+    }
+
+    function setFilterStatus(st) {
+      currentFilterStatus = st;
+      ['all', 'Pending', 'Approved'].forEach(s => {
+        const btn = document.getElementById(`filterBtn${s.charAt(0).toUpperCase() + s.slice(1)}`);
+        if (btn) {
+          if (s.toLowerCase() === st.toLowerCase()) {
+            btn.className = "px-2.5 py-1 rounded-lg bg-slate-900 text-white font-semibold transition";
+          } else {
+            btn.className = "px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition";
+          }
+        }
+      });
+      renderRequestsList();
+    }
+
+    function handleSearchChange(term) {
+      currentSearchTerm = term.trim();
+      document.getElementById('clearSearchBtn').classList.toggle('hidden', !term);
+      renderRequestsList();
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      currentSearchTerm = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      renderRequestsList();
+    }
+
+    function renderRequestsList() {
+      const container = document.getElementById('requestsListContainer');
+      const empty = document.getElementById('emptyRequestsState');
+      if (!container) return;
+
+      const filtered = requestsData.filter(r => {
+        const matchesStatus = currentFilterStatus === 'all' || r.status === currentFilterStatus;
+        const matchesSearch = !currentSearchTerm || r.numbers.some(n => n.mobile.includes(currentSearchTerm));
+        return matchesStatus && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      container.innerHTML = filtered.map(req => {
+        const isPending = req.status === 'Pending';
+        return `
+          <div class="bg-white rounded-xl p-3 border border-slate-200/90 text-xs shadow-xs flex items-center justify-between gap-2">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5">
+                <span 
+                  class="font-mono font-bold text-slate-900 cursor-pointer hover:text-sky-600 select-all transition" 
+                  onclick="copyToClipboard('${req.primaryMobile}', event)" 
+                  title="ক্লিক করে নম্বর কপি করুন"
+                >${req.primaryMobile}</span>
+                <button 
+                  type="button" 
+                  onclick="copyToClipboard('${req.primaryMobile}', event)" 
+                  class="p-1 rounded text-slate-400 hover:text-sky-600 hover:bg-sky-50 active:scale-90 transition" 
+                  title="নম্বর কপি করুন"
+                  aria-label="Copy number"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded font-bn ${
+                  req.primaryMethod === 'নগদ' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
+                  req.primaryMethod === 'রিচার্জ' ? 'bg-sky-50 text-sky-700 border border-sky-200' :
+                  'bg-pink-50 text-pink-700 border border-pink-200'
+                }">
+                  ${req.primaryMethod || 'বিকাশ'}
+                </span>
+              </div>
+              <div class="flex items-center gap-2 mt-0.5 text-slate-500 text-[11px]">
+                <span class="font-semibold text-slate-700 font-mono">৳${req.totalAmount}</span>
+                ${req.numbers.length > 1 ? `<span class="text-[10px] bg-slate-100 px-1 rounded">${req.numbers.length} nums</span>` : ''}
+                <span class="inline-flex items-center gap-1 ${isPending ? 'text-amber-600' : 'text-emerald-600'} font-medium text-[10px]">
+                  <span class="w-1.5 h-1.5 rounded-full ${isPending ? 'bg-amber-500' : 'bg-emerald-500'}"></span>
+                  ${req.status}
+                </span>
+              </div>
+              ${req.numbers.length > 1 ? `
+                <div class="mt-1.5 pt-1.5 border-t border-slate-100 space-y-1">
+                  ${req.numbers.map(n => `
+                    <div class="flex items-center justify-between text-[11px] bg-slate-50 px-2 py-0.5 rounded">
+                      <div class="flex items-center gap-1">
+                        <span class="font-mono text-slate-800 font-medium cursor-pointer hover:text-sky-600 select-all" onclick="copyToClipboard('${n.mobile}', event)">${n.mobile}</span>
+                        <button type="button" onclick="copyToClipboard('${n.mobile}', event)" class="text-slate-400 hover:text-sky-600 p-0.5 active:scale-90" title="কপি">
+                          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-slate-500 font-mono">
+                        <span class="font-semibold text-slate-700">৳${n.amount}</span>
+                        <span class="text-[10px] font-bold font-bn text-slate-600">${n.method || ''}</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Shopkeeper Actions -->
+            <div class="flex items-center gap-1.5 shrink-0">
+              ${isPending ? `
+                <button 
+                  onclick="promptApproveWithLast4('${req.id}')" 
+                  class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition active:scale-95"
+                >
+                  Approve
+                </button>
+              ` : `
+                <button 
+                  onclick="promptApproveWithLast4('${req.id}')" 
+                  class="px-2 py-1 rounded-md text-[11px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100 transition flex items-center gap-1 shadow-2xs"
+                  title="Approved: ${req.last4Digits || 'Approved'} (ক্লিক করে পরিবর্তন করুন)"
+                >
+                  <svg class="w-3 h-3 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  <span>${req.last4Digits || 'Approved'}</span>
+                </button>
+              `}
+
+              <button onclick="deleteReq('${req.id}')" class="text-slate-400 hover:text-rose-500 p-1" title="Delete">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    let activeApproveRequest = null;
+
+    function promptApproveWithLast4(id) {
+      const item = requestsData.find(r => r.id === id);
+      if (!item) return;
+      activeApproveRequest = item;
+
+      document.getElementById('approveTargetMobile').textContent = item.primaryMobile;
+      document.getElementById('approveTargetMethod').textContent = item.primaryMethod || 'বিকাশ';
+      document.getElementById('approveTargetAmount').textContent = `৳${item.totalAmount}`;
+
+      const input = document.getElementById('last4InputField');
+      input.value = item.last4Digits || '';
+
+      const undoWrap = document.getElementById('approveModalUndoWrap');
+      if (undoWrap) {
+        undoWrap.classList.toggle('hidden', item.status !== 'Approved');
+      }
+
+      document.getElementById('approveModal').classList.remove('hidden');
+      setTimeout(() => input.focus(), 100);
+    }
+
+    function closeApproveModal() {
+      document.getElementById('approveModal').classList.add('hidden');
+      activeApproveRequest = null;
+    }
+
+    function handleApproveSubmit(e) {
+      e.preventDefault();
+      if (!activeApproveRequest) return;
+      const digits = document.getElementById('last4InputField').value.trim();
+      if (digits.length !== 4) {
+        showToast('সঠিক ৪ ডিজিট দিন (উদা: 4821)');
+        return;
+      }
+
+      activeApproveRequest.status = 'Approved';
+      activeApproveRequest.last4Digits = digits;
+      saveRequests();
+      renderRequestsList();
+      closeApproveModal();
+      showToast(`রিকোয়েস্ট এপ্রুভ হয়েছে (${digits})`);
+    }
+
+    function revertToPending() {
+      if (!activeApproveRequest) return;
+      activeApproveRequest.status = 'Pending';
+      activeApproveRequest.last4Digits = '';
+      saveRequests();
+      renderRequestsList();
+      closeApproveModal();
+      showToast('রিকোয়েস্ট পেন্ডিং এ ফেরত নেওয়া হয়েছে');
+    }
+
+    function deleteReq(id) {
+      requestsData = requestsData.filter(r => r.id !== id);
+      saveRequests();
+      renderRequestsList();
+      showToast('Deleted');
+    }
+
+    // Service Worker & PWA Install
+    function setupPwa() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      }
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const btn = document.getElementById('pwaInstallBtn');
+        if (btn) {
+          btn.classList.remove('hidden');
+          btn.classList.add('flex');
+          btn.addEventListener('click', () => {
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              deferredPrompt = null;
+            }
+          });
+        }
+      });
+    }
+
+    // App Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      loadRequests();
+      addNumberRow();
+      setupPwa();
+
+      // Check URL query parameters for Customer QR vs Shopkeeper QR
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = (params.get('view') || params.get('mode') || params.get('role') || params.get('portal') || '').toLowerCase();
+      const pinParam = params.get('pin') || params.get('key') || params.get('admin');
+
+      if (viewParam === 'customer') {
+        // Customer scanned Customer QR code:
+        // Lock to customer view and completely HIDE the shopkeeper button!
+        isCustomerLocked = true;
+        setRole('customer');
+      } else if (viewParam === 'shopkeeper' && pinParam === SHOPKEEPER_PIN) {
+        // Shopkeeper scanned Shopkeeper Secret QR code:
+        // Automatically authenticate and open shopkeeper portal
+        isCustomerLocked = false;
+        setRole('shopkeeper');
+        showToast('দোকানদার মোডে স্বাগতম');
+      } else {
+        isCustomerLocked = false;
+        const savedRole = localStorage.getItem(ROLE_KEY) || 'customer';
+        if (savedRole === 'shopkeeper') {
+          setRole('shopkeeper');
+        } else {
+          setRole('customer');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
